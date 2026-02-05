@@ -19,7 +19,9 @@ A beautiful, interactive web application for tracking your World of Warcraft: Th
 
 ## 🚀 Live Demo
 
-[**Visit the Live App**](#) *(URL will be added after Render deployment)*
+**[🎮 Launch TBC Leveling Logbook](https://tbc-leveling-logbook.onrender.com)**
+
+Track your progress from level 60 to 70 with this interactive guide!
 
 ## 📸 Screenshots
 
