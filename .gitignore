@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+
+# Development files
+*.pyc
+.DS_Store
+Thumbs.db
+
+# Backup files
+*_BACKUP.html
+*_backup.*
+*.bak
+
+# Test files
+test_*.html
+diagnose.html
+ABRIR_AQUI.html
+
+# Build scripts (keep only the final one)
+embed_data.py
+fix_*.py
+apply_*.py
+build_complete.py
+generate_*.py
+verify_*.py
+parse_*.py
+extract_*.py
+deep_analysis.py
+
+# Excel source
+*.xlsx
+
+# Intermediate JSON files
+introduction_data.json
+route_data.json
+route_data_only.json
+leveling_data_clean.json
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
