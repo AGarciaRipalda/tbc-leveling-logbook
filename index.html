@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBC Leveling Logbook | 60-70 Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-dark: #0a0e1a;
+            --bg-darker: #050810;
+            --bg-panel: rgba(15, 20, 35, 0.85);
+            --bg-panel-hover: rgba(20, 25, 40, 0.95);
+            --gold: #FFD700;
+            --gold-dark: #B8860B;
+            --purple: #9370DB;
+            --purple-dark: #6A4FB3;
+            --green: #32CD32;
+            --green-dark: #228B22;
+            --blue: #4169E1;
+            --red: #DC143C;
+            --text-primary: #E8E8E8;
+            --text-secondary: #B0B0B0;
+            --border: rgba(255, 215, 0, 0.2);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 50%, #0a0e1a 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(147, 112, 219, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--bg-panel);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.6s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--gold) 0%, #FFF 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            letter-spacing: 2px;
+        }
+        
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 300;
+        }
+        
+        .progress-header {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-box {
+            background: var(--bg-darker);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            min-width: 150px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-top: 5px;
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        .panel {
+            background: var(--bg-panel);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .panel-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .collapse-btn {
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .collapse-btn:hover {
+            transform: scale(1.2);
+        }
+        
+        .info-section {
+            margin-bottom: 20px;
+        }
+        
+        .info-section h3 {
+            color: var(--purple);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        
+        .info-section p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+        
+        .xp-calculator {
+            position: sticky;
+            top: 20px;
+        }
+        
+        .calc-input-group {
+            margin-bottom: 20px;
+        }
+        
+        .calc-input-group label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .calc-input-group input,
+        .calc-input-group select {
+            width: 100%;
+            padding: 12px;
+            background: var(--bg-darker);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .calc-input-group input:focus,
+        .calc-input-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .xp-result {
+            background: var(--bg-darker);
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid var(--gold);
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .xp-result-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .xp-result-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--bg-darker);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: translateY(-2px);
+        }
+        
+        .filter-btn.active {
+            background: var(--gold);
+            color: var(--bg-dark);
+            border-color: var(--gold);
+        }
+        
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .task-item {
+            background: var(--bg-darker);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .task-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+        
+        .task-item.quest::before { background: var(--gold); }
+        .task-item.dungeon::before { background: var(--purple); }
+        .task-item.grind::before { background: var(--green); }
+        .task-item.milestone::before { background: var(--red); }
+        .task-item.travel::before { background: var(--blue); }
+        
+        .task-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .task-item:hover::before {
+            width: 100%;
+            opacity: 0.1;
+        }
+        
+        .task-item.completed {
+            opacity: 0.6;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--gold);
+            border-radius: 5px;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            margin-top: 3px;
+        }
+        
+        .checkbox:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: scale(1.1);
+        }
+        
+        .checkbox.checked {
+            background: var(--gold);
+        }
+        
+        .checkbox.checked::after {
+            content: '✓';
+            color: var(--bg-dark);
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .task-content {
+            flex: 1;
+        }
+        
+        .task-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .task-type.quest { background: var(--gold); color: var(--bg-dark); }
+        .task-type.dungeon { background: var(--purple); color: white; }
+        .task-type.grind { background: var(--green); color: white; }
+        .task-type.milestone { background: var(--red); color: white; }
+        .task-type.travel { background: var(--blue); color: white; }
+        .task-type.other { background: var(--text-secondary); color: var(--bg-dark); }
+        
+        .task-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .task-notes {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-top: 10px;
+            white-space: pre-line;
+        }
+        
+        .task-rewards {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-top: 10px;
+            white-space: pre-line;
+        }
+        
+        .xp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .xp-table th,
+        .xp-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+        
+        .xp-table th {
+            background: var(--bg-darker);
+            color: var(--gold);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .xp-table td {
+            background: rgba(10, 14, 26, 0.5);
+        }
+        
+        .xp-table tr:hover td {
+            background: rgba(255, 215, 0, 0.1);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .collapsible-content {
+            max-height: 2000px;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .collapsible-content.collapsed {
+            max-height: 0;
+        }
+        
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            background: var(--bg-darker);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .reset-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--red);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+        
+        .reset-btn:hover {
+            background: #B22222;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚔️ TBC Leveling Logbook ⚔️</h1>
+            <p class="subtitle">Guía Completa de Nivelación 60-70 | The Burning Crusade</p>
+            <div class="progress-header">
+                <div class="stat-box">
+                    <div class="stat-label">Progreso</div>
+                    <div class="stat-value" id="progress-percent">0%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Completadas</div>
+                    <div class="stat-value" id="completed-count">0/0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Nivel Estimado</div>
+                    <div class="stat-value" id="estimated-level">60</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-grid">
+            <div>
+                <div class="panel">
+                    <div class="panel-title">
+                        <span>📋 Ruta de Nivelación</span>
+                        <button class="collapse-btn" onclick="toggleCollapse('route-content')">▼</button>
+                    </div>
+                    <div id="route-content" class="collapsible-content">
+                        <input type="text" class="search-box" id="search-box" placeholder="🔍 Buscar tareas...">
+                        
+                        <div class="filters">
+                            <button class="filter-btn active" data-filter="all">Todas</button>
+                            <button class="filter-btn" data-filter="quest">Quests</button>
+                            <button class="filter-btn" data-filter="dungeon">Dungeons</button>
+                            <button class="filter-btn" data-filter="milestone">Milestones</button>
+                            <button class="filter-btn" data-filter="travel">Travel</button>
+                            <button class="filter-btn" data-filter="other">Otras</button>
+                        </div>
+                        
+                        <div class="task-list" id="task-list"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="panel xp-calculator">
+                    <div class="panel-title">
+                        <span>🧮 Calculadora XP</span>
+                    </div>
+                    
+                    <div class="calc-input-group">
+                        <label>Nivel Actual</label>
+                        <select id="current-level">
+                            <option value="60">60</option>
+                            <option value="61">61</option>
+                            <option value="62">62</option>
+                            <option value="63">63</option>
+                            <option value="64">64</option>
+                            <option value="65">65</option>
+                            <option value="66">66</option>
+                            <option value="67">67</option>
+                            <option value="68">68</option>
+                            <option value="69">69</option>
+                        </select>
+                    </div>
+                    
+                    <div class="calc-input-group">
+                        <label>XP Actual</label>
+                        <input type="number" id="current-xp" placeholder="0" min="0">
+                    </div>
+                    
+                    <div class="calc-input-group">
+                        <label>Nivel Objetivo</label>
+                        <select id="target-level">
+                            <option value="61">61</option>
+                            <option value="62">62</option>
+                            <option value="63">63</option>
+                            <option value="64">64</option>
+                            <option value="65">65</option>
+                            <option value="66">66</option>
+                            <option value="67">67</option>
+                            <option value="68">68</option>
+                            <option value="69">69</option>
+                            <option value="70" selected>70</option>
+                        </select>
+                    </div>
+                    
+                    <div class="xp-result">
+                        <div class="xp-result-label">XP Necesaria</div>
+                        <div class="xp-result-value" id="xp-needed">779,700</div>
+                    </div>
+                    
+                    <button class="reset-btn" onclick="resetProgress()">🔄 Reiniciar Progreso</button>
+                </div>
+                
+                <div class="panel" style="margin-top: 20px;">
+                    <div class="panel-title">
+                        <span>ℹ️ Información</span>
+                        <button class="collapse-btn" onclick="toggleCollapse('info-content')">▼</button>
+                    </div>
+                    <div id="info-content" class="collapsible-content">
+                        <div id="info-sections"></div>
+                        
+                        <div class="info-section">
+                            <h3>📊 Tabla de Experiencia</h3>
+                            <table class="xp-table" id="xp-table"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>World of Warcraft: The Burning Crusade Classic | Creado con ❤️ para la comunidad</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Embedded data from Excel
+        const DATA = {
+  "introduction": {
+    "general_info": [
+      "This guide is intended to get a 5-man group from level 60 to 70 in the most efficient way:\n\n• to level 70 by generally avoiding leveling in the open world;\n• to obtain all heroic keys\n• to obtain the Shadow Labyrinth, Shattered Halls, and Arcatraz keys\n• to attune to Karazhan\n• to summon Nightbane in first raid ID",
+      "General Tips:\n• the group's professions should cover herbalism and mining to gather resources within dungeons, enchanting to disenchant unneeded blues and greens to save space and gather enchanting materials, and tailoring to turn cloth into bolts to save space\n• bring a few pieces of hit gear for when you start missing mobs again in the mid-60s. More hit = faster clears\n• study your group's pre-raid BIS lists and adjust route to obtain pre-raid BIS items if there's wiggle room\n• Going back to Orgrimmar every level could be a time waster. Each class should carefully review their new spells to decide whether it's worth taking a break to learn new abilities at 61, 63, 65 etc. If you must go back to Org, take advantage of ghetto hearth in RFC to get back quickly",
+      "Disclaimer:\nThis info was stolen from many different online resources and content creators. This is what I believe to be the best route based on their collective work and resources.\n\nPublished data on experience per dungeon run is wildly inconsistent. Actual number of runs to reach next level may vary (and for that reason are rarely discussed).\n\nFor best results, the group should be AQ40/Naxx appropriately geared when it goes through the Dark Portal"
+    ],
+    "xp_table": [
+      {"level": 61, "xp_needed": 494000},
+      {"level": 62, "xp_needed": 574700},
+      {"level": 63, "xp_needed": 614400},
+      {"level": 64, "xp_needed": 650300},
+      {"level": 65, "xp_needed": 682300},
+      {"level": 66, "xp_needed": 710200},
+      {"level": 67, "xp_needed": 734100},
+      {"level": 68, "xp_needed": 753700},
+      {"level": 69, "xp_needed": 768900},
+      {"level": 70, "xp_needed": 779700}
+    ]
+  },
+  "route": ${JSON.stringify(require('./leveling_data.json').route)}
+};
+        
+        // State management
+        let completedTasks = new Set();
+        let currentFilter = 'all';
+        let searchQuery = '';
+        
+        // Load saved progress
+        function loadProgress() {
+            const saved = localStorage.getItem('tbc-leveling-progress');
+            if (saved) {
+                completedTasks = new Set(JSON.parse(saved));
+            }
+        }
+        
+        // Save progress
+        function saveProgress() {
+            localStorage.setItem('tbc-leveling-progress', JSON.stringify([...completedTasks]));
+            updateStats();
+        }
+        
+        // Reset progress
+        function resetProgress() {
+            if (confirm('¿Estás seguro de que quieres reiniciar todo el progreso? Esta acción no se puede deshacer.')) {
+                completedTasks.clear();
+                localStorage.removeItem('tbc-leveling-progress');
+                renderTasks();
+                updateStats();
+            }
+        }
+        
+        // Toggle task completion
+        function toggleTask(taskId) {
+            if (completedTasks.has(taskId)) {
+                completedTasks.delete(taskId);
+            } else {
+                completedTasks.add(taskId);
+            }
+            saveProgress();
+            renderTasks();
+        }
+        
+        // Render tasks
+        function renderTasks() {
+            const taskList = document.getElementById('task-list');
+            taskList.innerHTML = '';
+            
+            const filteredTasks = DATA.route.filter(task => {
+                const matchesFilter = currentFilter === 'all' || task.type === currentFilter;
+                const matchesSearch = searchQuery === '' || 
+                    task.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    (task.notes && task.notes.toLowerCase().includes(searchQuery.toLowerCase()));
+                return matchesFilter && matchesSearch;
+            });
+            
+            filteredTasks.forEach(task => {
+                const taskEl = document.createElement('div');
+                taskEl.className = `task-item ${task.type} ${completedTasks.has(task.id) ? 'completed' : ''}`;
+                
+                const checkbox = `<div class="checkbox ${completedTasks.has(task.id) ? 'checked' : ''}" onclick="toggleTask(${task.id})"></div>`;
+                
+                const typeLabel = `<span class="task-type ${task.type}">${task.type}</span>`;
+                
+                const notes = task.notes ? `<div class="task-notes">${task.notes}</div>` : '';
+                const rewards = task.rewards ? `<div class="task-rewards">💰 ${task.rewards}</div>` : '';
+                
+                taskEl.innerHTML = `
+                    <div class="task-header">
+                        ${checkbox}
+                        <div class="task-content">
+                            ${typeLabel}
+                            <div class="task-name">${task.name}</div>
+                            ${notes}
+                            ${rewards}
+                        </div>
+                    </div>
+                `;
+                
+                taskList.appendChild(taskEl);
+            });
+        }
+        
+        // Update statistics
+        function updateStats() {
+            const total = DATA.route.length;
+            const completed = completedTasks.size;
+            const percentage = Math.round((completed / total) * 100);
+            
+            document.getElementById('progress-percent').textContent = `${percentage}%`;
+            document.getElementById('completed-count').textContent = `${completed}/${total}`;
+            
+            // Estimate level based on completed tasks
+            // This is a simplified estimation
+            const estimatedLevel = 60 + Math.floor((completed / total) * 10);
+            document.getElementById('estimated-level').textContent = estimatedLevel;
+        }
+        
+        // Calculate XP needed
+        function calculateXP() {
+            const currentLevel = parseInt(document.getElementById('current-level').value);
+            const currentXP = parseInt(document.getElementById('current-xp').value) || 0;
+            const targetLevel = parseInt(document.getElementById('target-level').value);
+            
+            if (targetLevel <= currentLevel) {
+                document.getElementById('xp-needed').textContent = '0';
+                return;
+            }
+            
+            const targetXP = DATA.introduction.xp_table.find(x => x.level === targetLevel).xp_needed;
+            const needed = targetXP - currentXP;
+            
+            document.getElementById('xp-needed').textContent = needed.toLocaleString();
+        }
+        
+        // Render XP table
+        function renderXPTable() {
+            const table = document.getElementById('xp-table');
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Nivel</th>
+                        <th>XP Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${DATA.introduction.xp_table.map(row => `
+                        <tr>
+                            <td>${row.level}</td>
+                            <td>${row.xp_needed.toLocaleString()}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+        }
+        
+        // Render info sections
+        function renderInfoSections() {
+            const container = document.getElementById('info-sections');
+            const titles = ['Objetivos', 'Consejos Generales', 'Disclaimer'];
+            
+            container.innerHTML = DATA.introduction.general_info.map((info, i) => `
+                <div class="info-section">
+                    <h3>${titles[i]}</h3>
+                    <p>${info}</p>
+                </div>
+            `).join('');
+        }
+        
+        // Toggle collapse
+        function toggleCollapse(id) {
+            const content = document.getElementById(id);
+            const btn = event.target;
+            content.classList.toggle('collapsed');
+            btn.textContent = content.classList.contains('collapsed') ? '▶' : '▼';
+        }
+        
+        // Setup filters
+        function setupFilters() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    renderTasks();
+                });
+            });
+        }
+        
+        // Setup search
+        function setupSearch() {
+            document.getElementById('search-box').addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                renderTasks();
+            });
+        }
+        
+        // Setup XP calculator
+        function setupCalculator() {
+            ['current-level', 'current-xp', 'target-level'].forEach(id => {
+                document.getElementById(id).addEventListener('change', calculateXP);
+                document.getElementById(id).addEventListener('input', calculateXP);
+            });
+        }
+        
+        // Initialize app
+        function init() {
+            loadProgress();
+            renderInfoSections();
+            renderXPTable();
+            renderTasks();
+            updateStats();
+            setupFilters();
+            setupSearch();
+            setupCalculator();
+            calculateXP();
+        }
+        
+        // Start app when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    </script>
+</body>
+</html>

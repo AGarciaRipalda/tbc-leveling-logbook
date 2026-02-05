@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBC Leveling Logbook | 60-70 Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Roboto:wght@300;400;500&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0a0e1a;
+            --bg-darker: #050810;
+            --bg-panel: rgba(15, 20, 35, 0.85);
+            --bg-panel-hover: rgba(20, 25, 40, 0.95);
+            --gold: #FFD700;
+            --gold-dark: #B8860B;
+            --purple: #9370DB;
+            --purple-dark: #6A4FB3;
+            --green: #32CD32;
+            --green-dark: #228B22;
+            --blue: #4169E1;
+            --red: #DC143C;
+            --text-primary: #E8E8E8;
+            --text-secondary: #B0B0B0;
+            --border: rgba(255, 215, 0, 0.2);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a1f35 50%, #0a0e1a 100%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(147, 112, 219, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--bg-panel);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            background: linear-gradient(135deg, var(--gold) 0%, #FFF 50%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .controls {
+            background: var(--bg-panel);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--border);
+            background: var(--bg-darker);
+            color: var(--text-primary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn:hover {
+            background: var(--bg-panel-hover);
+            border-color: var(--gold);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--gold);
+            color: var(--bg-dark);
+            border-color: var(--gold);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            background: var(--bg-darker);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .route-section {
+            background: var(--bg-panel);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .task-item {
+            background: var(--bg-darker);
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .task-item:hover {
+            border-color: var(--gold);
+            transform: translateX(5px);
+        }
+
+        .task-item.completed {
+            opacity: 0.6;
+        }
+
+        .task-item.completed .task-name {
+            text-decoration: line-through;
+        }
+
+        .task-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--gold);
+            border-radius: 5px;
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            margin-top: 3px;
+        }
+
+        .checkbox:hover {
+            background: rgba(255, 215, 0, 0.1);
+            transform: scale(1.1);
+        }
+
+        .checkbox.checked {
+            background: var(--gold);
+        }
+
+        .checkbox.checked::after {
+            content: '✓';
+            color: var(--bg-dark);
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .task-type.quest {
+            background: var(--gold);
+            color: var(--bg-dark);
+        }
+
+        .task-type.dungeon {
+            background: var(--purple);
+            color: white;
+        }
+
+        .task-type.milestone {
+            background: var(--red);
+            color: white;
+        }
+
+        .task-type.grind {
+            background: var(--green);
+            color: var(--bg-dark);
+        }
+
+        .task-type.other {
+            background: var(--blue);
+            color: white;
+        }
+
+        .task-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            white-space: pre-wrap;
+        }
+
+        .task-notes {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 8px;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .task-rewards {
+            color: var(--gold);
+            font-size: 0.9rem;
+            margin-top: 8px;
+            white-space: pre-wrap;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .info-panel,
+        .calculator-panel {
+            background: var(--bg-panel);
+            border: 2px solid var(--border);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .panel-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .info-section {
+            margin-bottom: 20px;
+        }
+
+        .info-section h3 {
+            color: var(--purple);
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-section li {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .info-section li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+
+        .calculator-input {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .calculator-input input {
+            flex: 1;
+            padding: 10px;
+            background: var(--bg-darker);
+            border: 2px solid var(--border);
+            border-radius: 5px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .calculator-input input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .xp-result {
+            background: var(--bg-darker);
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .xp-result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .xp-result-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .xp-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .xp-table th,
+        .xp-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .xp-table th {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .xp-table td {
+            color: var(--text-secondary);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2rem;
+            color: var(--gold);
+        }
+
+        .error {
+            background: rgba(220, 20, 60, 0.2);
+            border: 2px solid var(--red);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: var(--red);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>⚔️ TBC Leveling Logbook ⚔️</h1>
+            <p class="subtitle">Your Complete Guide from 60 to 70</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="progress-percent">0%</div>
+                    <div class="stat-label">Progress</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="tasks-completed">0/0</div>
+                    <div class="stat-label">Tasks Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="estimated-level">60</div>
+                    <div class="stat-label">Estimated Level</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="controls">
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="quest">Quests</button>
+                <button class="filter-btn" data-filter="dungeon">Dungeons</button>
+                <button class="filter-btn" data-filter="grind">Grind</button>
+                <button class="filter-btn" data-filter="milestone">Milestones</button>
+                <button class="filter-btn" data-filter="other">Other</button>
+            </div>
+            <input type="text" class="search-box" id="search-box" placeholder="🔍 Search tasks...">
+        </div>
+
+        <div class="main-content">
+            <div class="route-section">
+                <h2 class="section-title">📜 Leveling Route</h2>
+                <div id="task-list" class="task-list">
+                    <div class="loading">Loading tasks...</div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="calculator-panel">
+                    <h3 class="panel-title">🧮 XP Calculator</h3>
+                    <div class="calculator-input">
+                        <input type="number" id="current-level" placeholder="Current Level" min="60" max="70"
+                            value="60">
+                        <input type="number" id="target-level" placeholder="Target Level" min="60" max="70" value="70">
+                    </div>
+                    <div class="xp-result">
+                        <div class="xp-result-value" id="xp-needed">0</div>
+                        <div class="xp-result-label">XP Needed</div>
+                    </div>
+                    <table class="xp-table">
+                        <thead>
+                            <tr>
+                                <th>Level</th>
+                                <th>XP Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="xp-table-body">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-panel" id="info-panel">
+                    <h3 class="panel-title">ℹ️ Information</h3>
+                    <div class="loading">Loading info...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State management
+        let DATA = null;
+        let completedTasks = new Set();
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        // Load saved progress
+        function loadProgress() {
+            const saved = localStorage.getItem('tbc-leveling-progress');
+            if (saved) {
+                completedTasks = new Set(JSON.parse(saved));
+            }
+        }
+
+        // Save progress
+        function saveProgress() {
+            localStorage.setItem('tbc-leveling-progress', JSON.stringify([...completedTasks]));
+        }
+
+        // Toggle task completion
+        function toggleTask(taskId) {
+            if (completedTasks.has(taskId)) {
+                completedTasks.delete(taskId);
+            } else {
+                completedTasks.add(taskId);
+            }
+            saveProgress();
+            renderTasks();
+            updateStats();
+        }
+
+        // Render tasks
+        function renderTasks() {
+            const taskList = document.getElementById('task-list');
+            taskList.innerHTML = '';
+
+            if (!DATA || !DATA.route) {
+                taskList.innerHTML = '<div class="error">Error: No data loaded</div>';
+                return;
+            }
+
+            const filteredTasks = DATA.route.filter(task => {
+                const matchesFilter = currentFilter === 'all' || task.type === currentFilter;
+                const matchesSearch = searchQuery === '' ||
+                    task.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    (task.notes && task.notes.toLowerCase().includes(searchQuery.toLowerCase()));
+                return matchesFilter && matchesSearch;
+            });
+
+            console.log(`[TBC] Rendering ${filteredTasks.length} tasks`);
+
+            filteredTasks.forEach(task => {
+                const taskEl = document.createElement('div');
+                taskEl.className = `task-item ${task.type} ${completedTasks.has(task.id) ? 'completed' : ''}`;
+
+                const checkbox = document.createElement('div');
+                checkbox.className = `checkbox ${completedTasks.has(task.id) ? 'checked' : ''}`;
+                checkbox.setAttribute('data-task-id', task.id);
+
+                const typeLabel = document.createElement('span');
+                typeLabel.className = `task-type ${task.type}`;
+                typeLabel.textContent = task.type;
+
+                const taskName = document.createElement('div');
+                taskName.className = 'task-name';
+                taskName.textContent = task.name;
+
+                const taskContent = document.createElement('div');
+                taskContent.className = 'task-content';
+                taskContent.appendChild(typeLabel);
+                taskContent.appendChild(taskName);
+
+                if (task.notes) {
+                    const notes = document.createElement('div');
+                    notes.className = 'task-notes';
+                    notes.textContent = task.notes;
+                    taskContent.appendChild(notes);
+                }
+
+                if (task.rewards) {
+                    const rewards = document.createElement('div');
+                    rewards.className = 'task-rewards';
+                    rewards.textContent = '💰 ' + task.rewards;
+                    taskContent.appendChild(rewards);
+                }
+
+                const taskHeader = document.createElement('div');
+                taskHeader.className = 'task-header';
+                taskHeader.appendChild(checkbox);
+                taskHeader.appendChild(taskContent);
+
+                taskEl.appendChild(taskHeader);
+                taskList.appendChild(taskEl);
+            });
+
+            console.log(`[TBC] Rendered ${filteredTasks.length} tasks successfully`);
+        }
+
+        // Update statistics
+        function updateStats() {
+            if (!DATA || !DATA.route) return;
+
+            const total = DATA.route.length;
+            const completed = completedTasks.size;
+            const percent = Math.round((completed / total) * 100);
+            const estimatedLevel = 60 + Math.floor((completed / total) * 10);
+
+            document.getElementById('progress-percent').textContent = percent + '%';
+            document.getElementById('tasks-completed').textContent = `${completed}/${total}`;
+            document.getElementById('estimated-level').textContent = estimatedLevel;
+        }
+
+        // Render info sections
+        function renderInfoSections() {
+            if (!DATA || !DATA.introduction) return;
+
+            const infoPanel = document.getElementById('info-panel');
+            infoPanel.innerHTML = '<h3 class="panel-title">ℹ️ Information</h3>';
+
+            const intro = DATA.introduction;
+
+            if (intro.general_tips) {
+                const section = document.createElement('div');
+                section.className = 'info-section';
+                section.innerHTML = '<h3>General Tips</h3>';
+                const ul = document.createElement('ul');
+                intro.general_tips.forEach(tip => {
+                    const li = document.createElement('li');
+                    li.textContent = tip;
+                    ul.appendChild(li);
+                });
+                section.appendChild(ul);
+                infoPanel.appendChild(section);
+            }
+
+            if (intro.key_requirements) {
+                const section = document.createElement('div');
+                section.className = 'info-section';
+                section.innerHTML = '<h3>Key Requirements</h3>';
+                const ul = document.createElement('ul');
+                intro.key_requirements.forEach(req => {
+                    const li = document.createElement('li');
+                    li.textContent = req;
+                    ul.appendChild(li);
+                });
+                section.appendChild(ul);
+                infoPanel.appendChild(section);
+            }
+        }
+
+        // XP Table data
+        const XP_TABLE = {
+            61: 494000,
+            62: 574700,
+            63: 614400,
+            64: 650300,
+            65: 682300,
+            66: 710200,
+            67: 734100,
+            68: 753700,
+            69: 768900,
+            70: 779700
+        };
+
+        // Calculate XP
+        function calculateXP() {
+            const currentLevel = parseInt(document.getElementById('current-level').value) || 60;
+            const targetLevel = parseInt(document.getElementById('target-level').value) || 70;
+
+            let totalXP = 0;
+            for (let level = currentLevel + 1; level <= targetLevel; level++) {
+                totalXP += XP_TABLE[level] || 0;
+            }
+
+            document.getElementById('xp-needed').textContent = totalXP.toLocaleString();
+        }
+
+        // Render XP table
+        function renderXPTable() {
+            const tbody = document.getElementById('xp-table-body');
+            tbody.innerHTML = '';
+
+            for (let level = 61; level <= 70; level++) {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+          <td>${level}</td>
+          <td>${XP_TABLE[level].toLocaleString()}</td>
+        `;
+                tbody.appendChild(row);
+            }
+        }
+
+        // Setup filters
+        function setupFilters() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    renderTasks();
+                });
+            });
+        }
+
+        // Setup search
+        function setupSearch() {
+            document.getElementById('search-box').addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                renderTasks();
+            });
+        }
+
+        // Setup calculator
+        function setupCalculator() {
+            document.getElementById('current-level').addEventListener('input', calculateXP);
+            document.getElementById('target-level').addEventListener('input', calculateXP);
+        }
+
+        // Setup event delegation for checkboxes
+        function setupCheckboxDelegation() {
+            document.addEventListener('click', function (event) {
+                const checkbox = event.target.closest('.checkbox');
+                if (checkbox) {
+                    const taskId = parseInt(checkbox.getAttribute('data-task-id'));
+                    if (!isNaN(taskId)) {
+                        console.log('[TBC] Checkbox clicked, Task ID:', taskId);
+                        toggleTask(taskId);
+                    }
+                }
+            });
+        }
+
+        // Load data from JSON file
+        async function loadData() {
+            try {
+                console.log('[TBC] Loading data from leveling_data.json...');
+                const response = await fetch('leveling_data.json');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                DATA = await response.json();
+                console.log('[TBC] Data loaded successfully:', DATA.route.length, 'tasks');
+
+                // Initialize app
+                loadProgress();
+                renderInfoSections();
+                renderXPTable();
+                renderTasks();
+                updateStats();
+                calculateXP();
+
+            } catch (error) {
+                console.error('[TBC] Error loading data:', error);
+                document.getElementById('task-list').innerHTML = `
+          <div class="error">
+            <strong>Error loading data:</strong><br>
+            ${error.message}<br><br>
+            Make sure <code>leveling_data.json</code> is in the same folder as this HTML file.
+          </div>
+        `;
+            }
+        }
+
+        // Initialize app when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+
+        function init() {
+            setupFilters();
+            setupSearch();
+            setupCalculator();
+            setupCheckboxDelegation();
+            loadData();
+        }
+    </script>
+</body>
+
+</html>
