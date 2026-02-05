@@ -1354,23 +1354,32 @@
 
             const intro = DATA.introduction;
             
-            // Render general_info array
-            if (intro.general_info && Array.isArray(intro.general_info)) {
-                intro.general_info.forEach(infoText => {
-                    const section = document.createElement('div');
-                    section.className = 'info-section';
-                    
-                    const content = document.createElement('div');
-                    content.style.color = 'var(--text-secondary)';
-                    content.style.fontSize = '0.9rem';
-                    content.style.lineHeight = '1.6';
-                    content.style.whiteSpace = 'pre-wrap';
-                    content.style.marginBottom = '15px';
-                    content.textContent = infoText;
-                    
-                    section.appendChild(content);
-                    infoPanel.appendChild(section);
+            if (intro.general_tips) {
+                const section = document.createElement('div');
+                section.className = 'info-section';
+                section.innerHTML = '<h3>General Tips</h3>';
+                const ul = document.createElement('ul');
+                intro.general_tips.forEach(tip => {
+                    const li = document.createElement('li');
+                    li.textContent = tip;
+                    ul.appendChild(li);
                 });
+                section.appendChild(ul);
+                infoPanel.appendChild(section);
+            }
+
+            if (intro.key_requirements) {
+                const section = document.createElement('div');
+                section.className = 'info-section';
+                section.innerHTML = '<h3>Key Requirements</h3>';
+                const ul = document.createElement('ul');
+                intro.key_requirements.forEach(req => {
+                    const li = document.createElement('li');
+                    li.textContent = req;
+                    ul.appendChild(li);
+                });
+                section.appendChild(ul);
+                infoPanel.appendChild(section);
             }
         }
 
