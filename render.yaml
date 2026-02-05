@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: tbc-leveling-logbook
+    env: static
+    buildCommand: echo "No build required - static site"
+    staticPublishPath: .
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index_complete.html
